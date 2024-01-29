@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "787481591657",
+    "project_id": "stoppubenvrai",
+    "storage_bucket": "stoppubenvrai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787481591657:android:5889d5da7f28f1521f47f8",
+        "android_client_info": {
+          "package_name": "com.stoppubenvrai.stoppubenvrai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDanrvjpm5-H1MCVOyLzHSlOuO02F_V76A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
