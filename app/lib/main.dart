@@ -6,8 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
+import 'package:path/path.dart';
 // ...
 
 
@@ -77,9 +78,21 @@ class _MyHomePageState extends State<MyHomePage> {
   XFile? _photo;
 
 
+  void uploadPhoto(XFile photo) async{
+    final storage = FirebaseStorage.instance;
+    final storageRef = storage.ref();
+    final uuid = const Uuid().v4();
+    final userUid = FirebaseAuth.instance.currentUser!.uid;
+    final imageSuffix = extension(photo.path);
+    final imageRef = storageRef.child("user/$userUid/$uuid.$imageSuffix");
+    await imageRef.putFile(File(photo.path));
+  }
+
+
   void _incrementCounter() async {
     final ImagePicker picker = ImagePicker();
     final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    uploadPhoto(photo!);
 
     setState(() {
       // This call to setState tells the Flutter framework that something has
