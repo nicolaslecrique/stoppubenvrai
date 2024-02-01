@@ -39,7 +39,7 @@ dependencies:
   firebase_auth: ^4.16.0
   firebase_storage: ^11.6.0
   uuid: ^4.3.2
-  path: ^1.9.0
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:
@@ -67,7 +67,8 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
+  assets:
+    - assets/stop_pub_sticker.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
