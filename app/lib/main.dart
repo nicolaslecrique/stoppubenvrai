@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:stoppubenvrai/StopPubMainScreen.dart';
+import 'package:stoppubenvrai/routes/main_screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -74,20 +74,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  XFile? _photo;
-
-
-  void uploadPhoto(XFile photo) async{
-    final storage = FirebaseStorage.instance;
-    final storageRef = storage.ref();
-    final uuid = const Uuid().v4();
-    final userUid = FirebaseAuth.instance.currentUser!.uid;
-    final imageSuffix = extension(photo.path);
-    final imageRef = storageRef.child("user/$userUid/$uuid.$imageSuffix");
-    await imageRef.putFile(File(photo.path));
-  }
-
 
   void _incrementCounter() async {
     final ImagePicker picker = ImagePicker();
@@ -113,6 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return StopPubWidget();
+    return MainScreen();
   }
 }

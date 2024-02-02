@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class StopPubWidget extends StatelessWidget {
+class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class StopPubWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 24.0),
                   Text(
-                    'En 2 secondes, envoyez anonymement un rappel à la loi a l\'annonceur',
+                    'En 2 secondes, envoyez anonymement un rappel à la loi à l\'annonceur',
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
