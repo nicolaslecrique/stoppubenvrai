@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:stoppubenvrai/model.dart';
 
 class AfterSendScreen extends StatelessWidget {
+
+  static const route = "after_send_route";
+
+
+  void takePhoto(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    if (photo != null){
+      if (!context.mounted) return;
+      Model model = Provider.of<Model>(context, listen: false);
+      model.uploadPhoto(photo);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,22 +40,11 @@ class AfterSendScreen extends StatelessWidget {
                     width: 300, // Ajustez la largeur selon vos besoins
                     height: 150, // Ajustez la hauteur selon vos besoins
                   ),
-                  SizedBox(height: 24.0),
+                  SizedBox(height: 48.0),
                   Text(
-                    '800 000 tonnes de pubs vont droit à la poubelle chaque année.\n\nFaisons respecter notre autocollant STOP PUB.',
+                    'Merci pour votre aide!\n\nCet annonceur recevra un rappel à la loi et des sanctions encourues',
                     style: TextStyle(
                       fontSize: 24.0,
-                      fontFamily: 'Roboto', // Utiliser Roboto pour tout le texte
-                      color: Colors.black87,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 24.0),
-                  Text(
-                    'En 2 secondes, envoyez anonymement un rappel à la loi à l\'annonceur',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
                       fontFamily: 'Roboto', // Utiliser Roboto pour tout le texte
                       color: Colors.black87,
                     ),
@@ -52,13 +58,13 @@ class AfterSendScreen extends StatelessWidget {
               height: 80.0, // Définir une hauteur plus grande pour le bouton
               child: ElevatedButton(
                 onPressed: () {
-                  // Gérer le clic sur le bouton
+                  takePhoto(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red, // Fond rouge pour le bouton
                 ),
                 child: Text(
-                  'Prendre la pub en photo',
+                  'Envoyez une autre pub',
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,

@@ -10,19 +10,13 @@ import 'package:uuid/uuid.dart';
 class Model extends ChangeNotifier {
 
   late User _user;
-  XFile? _photo;
 
-  // it's called after the currentUser is defined (at startup)
   void init() {
     _user = FirebaseAuth.instance.currentUser!;
-  }
+  } // it's called after the currentUser is defined (at startup)
 
-  void uploadPhoto() async {
-    final photo = _photo;
-    if (photo == null){
-      return;
-    }
-    
+
+  void uploadPhoto(XFile photo) async {
     final storage = FirebaseStorage.instance;
     final storageRef = storage.ref();
     final uuid = const Uuid().v4();
