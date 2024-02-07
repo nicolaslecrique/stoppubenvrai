@@ -28,36 +28,50 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.green[100], // Couleur verte claire pour une impression de nature
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color(0xff007F40) ,
+                Color(0xff34A247) ,
+                //Color(0xff007F40),
+                //Color(0xff34A247),
+                Colors.white,
+                Colors.white,
+                Colors.white,
+              ],
+            )
         ),
         padding: EdgeInsets.all(32.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              width: double.infinity, // Faire en sorte que le bouton occupe toute la largeur
+              height: 300.0, // Définir une hauteur plus grande pour le bouton
+              child: Image.asset(
+                'assets/stop_pub_sticker.png', // Chemin vers votre image de logo
+              ),
+            ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/stop_pub_sticker.png', // Chemin vers votre image de logo
-                    width: 300, // Ajustez la largeur selon vos besoins
-                    height: 150, // Ajustez la hauteur selon vos besoins
-                  ),
-                  SizedBox(height: 24.0),
                   Text(
-                    '800 000 tonnes de pubs vont droit à la poubelle chaque année.\n\nFaisons respecter notre autocollant STOP PUB.',
+                    'Faisons respecter notre autocollant STOP PUB',
                     style: TextStyle(
                       fontSize: 24.0,
+
                       fontFamily: 'Roboto', // Utiliser Roboto pour tout le texte
                       color: Colors.black87,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 24.0),
+                  SizedBox(height: 48.0),
                   Text(
-                    'En 2 secondes, envoyez anonymement un rappel à la loi à l\'annonceur',
+                    'En un instant et anonymement, envoyez un rappel à la loi à l\'annonceur',
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
@@ -72,17 +86,18 @@ class MainScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity, // Faire en sorte que le bouton occupe toute la largeur
               height: 80.0, // Définir une hauteur plus grande pour le bouton
-              child: ElevatedButton(
+              child: ElevatedButton.icon(
                 onPressed: () {
                   takePhoto(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red, // Fond rouge pour le bouton
+                  backgroundColor: const Color(0xff34A247) , // Fond rouge pour le bouton
                 ),
-                child: Text(
+                icon: Icon(Icons.photo_camera, color: Colors.white),
+                label: Text(
                   'Prendre la pub en photo',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.white, // Texte blanc pour le bouton
                   ),
