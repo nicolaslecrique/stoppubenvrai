@@ -14,18 +14,20 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseAuth.instance.signInAnonymously();
-  runApp(const MyApp());
+  UserCredential userCred = await FirebaseAuth.instance.signInAnonymously();
+  runApp(MyApp(user: userCred.user!));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final User user;
+
+  const MyApp({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
 
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => Model())],
+      providers: [ChangeNotifierProvider(create: (context) => Model(user: user))],
       child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
