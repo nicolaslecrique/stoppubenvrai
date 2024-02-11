@@ -1,8 +1,12 @@
+from ast import Pass
 import os
+import secrets
+from time import timezone
 from firebase_admin import storage
 from firebase_admin import credentials
 import firebase_admin
-from datetime import datetime
+from datetime import date, datetime, tzinfo, timezone
+from config import bucket_name
 
 # Initialize Firebase Admin SDK
 cred = credentials.Certificate("secrets/firebaseAdminServiceAccount.json")  # Path to your service account key file
@@ -10,34 +14,36 @@ firebase_admin.initialize_app(cred, {
     # 'storageBucket': 'your-storage-bucket-url'  # Your Firebase Storage bucket URL
 })
 
-bucket = storage.bucket()
+bucket = storage.bucket(bucket_name)
 
-def download_files_after_date(destination_folder: str, date: datetime):
+def download_files_after_date(destination_folder: str, min_date: datetime):
     # Convert date to Firebase Storage format
-    date_string = date.strftime("%Y-%m-%d")
+    date_string = min_date.strftime("%Y-%m-%d")
     
-    # List all files in Firebase Storage bucket
     blobs = bucket.list_blobs()
+    recent_blobs = [b for b in blobs if b.time_created > min_date]
 
-    for blob in blobs:
-        # Check if the file was uploaded after the specified date
-        if blob.time_created.date() > date:
-            # Create destination folder if it doesn't exist
-            if not os.path.exists(destination_folder):
-                os.makedirs(destination_folder)
-            
-            # Download the file
-            destination_file = os.path.join(destination_folder, blob.name)
+    for blob in recent_blobs:
+
+        blob_name: str = blob.name
+        split = blob_name.split('/')
+        file_dir = "/".join(split[:-1])
+        file_name=split[-1]
+        dest_dir = os.path.join(destination_folder, file_dir)
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+
+        destination_file = os.path.join(dest_dir, file_name)
+        if not os.path.exists(destination_file):
             blob.download_to_filename(destination_file)
-            print(f"Downloaded {blob.name} to {destination_file}")
+        else:
+            print(f'{destination_file} already exists')
 
-# Example usage
+
 if __name__ == "__main__":
-    # Specify the destination folder where files will be downloaded
-    destination_folder = "downloaded_files"
+    destination_folder = "generated/uploaded_images"
     
-    # Specify the date after which files should be downloaded
-    date = datetime(2024, 1, 1)  # Example: January 1, 2024
+    min_date = datetime(2024, 1, 1, tzinfo=timezone.utc)
     
     # Call the function to download files uploaded after the specified date
-    download_files_after_date(destination_folder, date)
+    download_files_after_date(destination_folder, min_date)
