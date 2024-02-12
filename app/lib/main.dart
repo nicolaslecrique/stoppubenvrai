@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:stoppubenvrai/routes/after_send_screen.dart';
 import 'package:stoppubenvrai/routes/main_screen.dart';
@@ -9,12 +10,14 @@ import 'firebase_options.dart';
 import 'model.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   UserCredential userCred = await FirebaseAuth.instance.signInAnonymously();
+  FlutterNativeSplash.remove();
   runApp(MyApp(user: userCred.user!));
 }
 
